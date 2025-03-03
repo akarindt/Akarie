@@ -1,25 +1,21 @@
-using System.Text.Json.Serialization;
-using Newtonsoft.Json;
-
 namespace server.Models
 {
-    public class GithubUserInfo(string _avatar_url, string _url, string _name, string _bio)
-    {
-        public string avatar_url { get; set; } = _avatar_url;
-        public string url { get; set; } = _url;
-        public string name { get; set; } = _name;
-        public string bio { get; set; } = _bio;
-    }
+	public class GithubUserInfo
+	{
+		public string avatar_url { get; set; } = string.Empty;
+		public string url { get; set; } = string.Empty;
+		public string name { get; set; } = string.Empty;
+		public string bio { get; set; } = string.Empty;
+	}
 
-    public class GithubRepos(string _name, string _html_url, string _description, int _stargazers_count, int _watchers_count, int _forks_count, string _created_at)
-    {
-        public string name { get; set; } = _name;
-        public string html_url { get; set; } = _html_url;
-        public string description { get; set; } = _description;
-        public int stargazers_count { get; set; } = _stargazers_count;
-        public int watchers_count { get; set; } = _watchers_count;
-        public int forks_count { get; set; } = _forks_count;
-        public string created_at { get; set; } = _created_at;
-
-    }
+	public class GithubRepos
+	{
+		public string name { get; set; } = string.Empty;
+		public string html_url { get; set; } = string.Empty;
+		public string description { get; set; } = string.Empty;
+		public int stargazers_count { get; set; }
+		public int watchers_count { get; set; }
+		public int forks_count { get; set; }
+		public string created_at { get; set; } = string.Empty;
+	}
 }

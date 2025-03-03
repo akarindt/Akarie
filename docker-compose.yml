@@ -1,0 +1,16 @@
+version: "3.8"
+services:
+  redis:
+    image: redis:7.4.2-alpine
+    restart: always
+    ports:
+      - "${REDIS_PORT}:${REDIS_PORT}"
+    command: redis-server --save 20 1 --loglevel warning --requirepass ${REDIS_PASS} --port ${REDIS_PORT}
+    expose:
+      - "${REDIS_PORT}"
+    volumes:
+      - redis:/data
+
+volumes:
+  redis:
+    driver: local
