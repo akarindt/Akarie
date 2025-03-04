@@ -1,4 +1,5 @@
 ﻿using System.Collections.Concurrent;
+using System.Net;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
@@ -10,94 +11,152 @@ using server.Response;
 
 namespace server.Endpoints
 {
-    public static class GithubEndpoint
-    {
-        public static IEndpointRouteBuilder MapGithubEndpoint(this IEndpointRouteBuilder builder, IDistributedCache cache)
-        {
-            builder.MapGet(
-                "user/info",
-                async (HttpContext context) =>
-                {
-                    var responseData = await cache.GetOrSetAsync(
-                        context.Request.GetEncodedUrl(),
-                        async () =>
-                        {
-                            var client = new RestClient($"{Environment.GetEnvironmentVariable("GITHUB_BASE_API")}/user");
+	public static class GithubEndpoint
+	{
+		public static IEndpointRouteBuilder MapGithubEndpoint(this IEndpointRouteBuilder builder, IDistributedCache cache)
+		{
+			builder.MapGet(
+				"user/info",
+				async (HttpContext context) =>
+				{
+					var responseData = await cache.GetOrSetAsync(
+						context.Request.GetEncodedUrl(),
+						async () =>
+						{
+							var baseApi =
+								Environment.GetEnvironmentVariable("GITHUB_BASE_API")
+								?? throw new ApiError(
+									HttpStatusCode.InternalServerError,
+									"Internal Server Error.",
+									"Internal Server Error."
+								);
 
-                            var request = new RestRequest { Method = Method.Get };
-                            request.AddHeader(
-                                "Authorization",
-                                $"token {Environment.GetEnvironmentVariable("GITHUB_TOKEN")}"
-                            );
-                            request.AddHeader("User-Agent", Constants.USER_AGENT);
-                            request.AddHeader("Accept", "application/vnd.github.v3+json");
+							var githubToken =
+								Environment.GetEnvironmentVariable("GITHUB_TOKEN")
+								?? throw new ApiError(
+									HttpStatusCode.InternalServerError,
+									"Internal Server Error.",
+									"Internal Server Error."
+								);
 
-                            var response =
-                                (await client.ExecuteAsync(request)).Content
-                                ?? throw new ApiError(400, "Bad request.", "Cannot fetch Github API.");
-                            var data =
-                                JsonConvert.DeserializeObject<GithubUserInfo>(response)
-                                ?? throw new ApiError(404, "Not found.", "User not found.");
+							var client = new RestClient($"{baseApi}/user");
+							var request = new RestRequest { Method = Method.Get };
 
-                            return data;
-                        }
-                    );
+							request.AddHeader("Authorization", $"token {githubToken}");
+							request.AddHeader("User-Agent", Constants.USER_AGENT);
+							request.AddHeader("Accept", "application/vnd.github.v3+json");
 
-                    return Results.Json(new ApiResponse<GithubUserInfo>(200, "Success.", responseData!));
-                }
-            );
+							var response = await client.ExecuteAsync(request);
 
-            builder.MapGet(
-                "repos/info",
-                async (HttpContext context) =>
-                {
-                    var responseData = await cache.GetOrSetAsync(
-                        context.Request.GetEncodedUrl(),
-                        async () =>
-                        {
-                            var repos = Constants.REPOS;
-                            var data = new ConcurrentBag<GithubRepos>();
+							if (!response.IsSuccessful)
+							{
+								throw new ApiError(HttpStatusCode.BadRequest, "Bad request.", "Unable to fetch Github API.");
+							}
 
-                            var request = new RestRequest { Method = Method.Get };
-                            request.AddHeader(
-                                "Authorization",
-                                $"token {Environment.GetEnvironmentVariable("GITHUB_TOKEN")}"
-                            );
-                            request.AddHeader("User-Agent", Constants.USER_AGENT);
-                            request.AddHeader("Accept", "application/vnd.github.v3+json");
+							if (string.IsNullOrEmpty(response.Content))
+							{
+								throw new ApiError(HttpStatusCode.NotFound, "Not found.", "Github user not found.");
+							}
 
-                            async Task<GithubRepos?> fetch(string repo)
-                            {
-                                var client = new RestClient(
-                                    $"{Environment.GetEnvironmentVariable("GITHUB_BASE_API")}/{repo}"
-                                );
+							var data =
+								JsonConvert.DeserializeObject<GithubUserInfo>(response.Content)
+								?? throw new ApiError(
+									HttpStatusCode.BadRequest,
+									"Data conversion error.",
+									"Cannot convert response data."
+								);
 
-                                var response = (await client.ExecuteAsync(request)).Content;
-                                if (response == null)
-                                    return null;
+							return data;
+						}
+					);
 
-                                var converted = JsonConvert.DeserializeObject<GithubRepos>(response);
-                                return converted;
-                            }
+					return Results.Json(
+						new ApiResponse<GithubUserInfo>(HttpStatusCode.OK, "Success.", responseData!),
+						contentType: "application/json"
+					);
+				}
+			);
 
-                            await Task.WhenAll(
-                                repos.Select(async repo =>
-                                {
-                                    var fetchRepo = await fetch(repo);
-                                    if (fetchRepo != null)
-                                    {
-                                        data.Add(fetchRepo);
-                                    }
-                                })
-                            );
+			builder.MapGet(
+				"repos/info",
+				async (HttpContext context) =>
+				{
+					var responseData = await cache.GetOrSetAsync(
+						context.Request.GetEncodedUrl(),
+						async () =>
+						{
+							var baseApi =
+								Environment.GetEnvironmentVariable("GITHUB_BASE_API")
+								?? throw new ApiError(
+									HttpStatusCode.InternalServerError,
+									"Internal Server Error.",
+									"Internal Server Error."
+								);
 
-                            return data.OrderBy(x => x.created_at).ToList();
-                        }
-                    );
-                    return Results.Json(new ApiResponse<IEnumerable<GithubRepos>>(200, "Success.", responseData!));
-                }
-            );
-            return builder;
-        }
-    }
+							var githubToken =
+								Environment.GetEnvironmentVariable("GITHUB_TOKEN")
+								?? throw new ApiError(
+									HttpStatusCode.InternalServerError,
+									"Internal Server Error.",
+									"Internal Server Error."
+								);
+
+							var repos = Constants.REPOS;
+							var data = new ConcurrentBag<GithubRepos>();
+
+							var request = new RestRequest { Method = Method.Get };
+							request.AddHeader("Authorization", $"token {githubToken}");
+							request.AddHeader("User-Agent", Constants.USER_AGENT);
+							request.AddHeader("Accept", "application/vnd.github.v3+json");
+
+							async Task<GithubRepos?> fetch(string repo)
+							{
+								var client = new RestClient($"{baseApi}/{repo}");
+
+								var response = await client.ExecuteAsync(request);
+
+								if (!response.IsSuccessful)
+								{
+									return null;
+								}
+
+								if (string.IsNullOrEmpty(response.Content))
+								{
+									return null;
+								}
+
+								var converted =
+									JsonConvert.DeserializeObject<GithubRepos>(response.Content)
+									?? throw new ApiError(
+										HttpStatusCode.BadRequest,
+										"Data conversion error.",
+										"Cannot convert response data."
+									);
+								return converted;
+							}
+
+							await Task.WhenAll(
+								repos.Select(async repo =>
+								{
+									var fetchRepo = await fetch(repo);
+									if (fetchRepo != null)
+									{
+										data.Add(fetchRepo);
+									}
+								})
+							);
+
+							return data.OrderBy(x => x.created_at).ToList();
+						}
+					);
+
+					return Results.Json(
+						new ApiResponse<IEnumerable<GithubRepos>>(HttpStatusCode.OK, "Success.", responseData!),
+						contentType: "application/json"
+					);
+				}
+			);
+			return builder;
+		}
+	}
 }

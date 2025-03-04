@@ -42,9 +42,10 @@ namespace server.Helpers
 		{
 			var val = cache.Get(key);
 			value = default;
-			if (val == null) {
+			if (val == null)
+			{
 				return false;
-            }
+			}
 			value = JsonSerializer.Deserialize<T>(val, serializerOptions);
 			return true;
 		}

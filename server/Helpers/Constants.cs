@@ -12,5 +12,7 @@ namespace server.Helpers
 
 		public static readonly TimeSpan DEFAULT_SLIDING_EXPIRATION = TimeSpan.FromMinutes(5);
 		public static readonly TimeSpan DEFAULT_ABSOLUTE_EXPIRATION = TimeSpan.FromMinutes(10);
+
+		public static readonly int PRIMARY_EMBED_COLOR = 0xeb86c6;
 	}
 }

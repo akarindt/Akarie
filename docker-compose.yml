@@ -1,4 +1,5 @@
 version: "3.8"
+
 services:
   redis:
     image: redis:7.4.2-alpine
@@ -10,7 +11,25 @@ services:
       - "${REDIS_PORT}"
     volumes:
       - redis:/data
+    networks:
+      - backend
+
+  server:
+    build: ./server/
+    restart: always
+    depends_on:
+      - redis
+    env_file:
+      - ./server/.env
+    ports:
+      - "5000:5000"
+    networks:
+      - backend
 
 volumes:
   redis:
     driver: local
+
+networks:
+  backend:
+    driver: bridge
