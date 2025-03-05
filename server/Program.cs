@@ -12,7 +12,6 @@ DotEnv.Load();
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddOpenApi();
 
 builder.Services.AddStackExchangeRedisCache(options =>
 {
@@ -70,18 +69,32 @@ builder.Services.AddRateLimiter(options =>
 	};
 });
 
-builder.Services.AddCors();
+builder.Services.AddCors(options =>
+{
+	options.AddPolicy(
+		name: "_default",
+		builder =>
+		{
+			builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+		}
+	);
+});
 
 var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
-	app.MapOpenApi();
+	app.UseSwaggerUI(options =>
+	{
+		options.SwaggerEndpoint("/swagger/doc.json", "v1");
+	});
 }
 
+app.UseStaticFiles();
 app.UseMiddleware<GlobalErrorHandlingMiddlewares>();
 
 app.UseRateLimiter();
 app.UseHttpsRedirection();
+app.UseCors("_default");
 
 app.MapGroup("/api/github").WithTags("Github").MapGithubEndpoint(app.Services.GetRequiredService<IDistributedCache>());
 app.MapGroup("/api/discord").WithTags("Discord").MapDiscordEndpoint(app.Services.GetRequiredService<IDistributedCache>());

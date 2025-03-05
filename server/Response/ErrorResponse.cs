@@ -6,6 +6,6 @@ namespace server.Response
 	{
 		public HttpStatusCode StatusCode { get; set; } = _statusCode;
 		public string Title { get; set; } = _title;
-		public string Messgae { get; set; } = _message;
+		public string Message { get; set; } = _message;
 	}
 }
