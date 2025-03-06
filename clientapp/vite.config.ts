@@ -11,6 +11,8 @@ export default defineConfig({
             '@': path.resolve(__dirname, '../clientapp'),
             '@interface': path.resolve(__dirname, '../clientapp/src/interface'),
             '@helper': path.resolve(__dirname, '../clientapp/src/helper'),
+            '@component': path.resolve(__dirname, '../clientapp/src/component'),
+            '@context': path.resolve(__dirname, '../clientapp/src/context'),
         },
     },
 });

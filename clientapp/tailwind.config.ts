@@ -1,1 +1,4 @@
-export default { content: ['./src/**/*.{html,js}'], theme: {} };
+export default {
+    content: ['./src/**/*.{html,js}'],
+    theme: {},
+};

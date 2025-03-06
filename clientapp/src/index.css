@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+@import 'tailwindcss';
+
+@layer base {
+    html {
+        font-family: 'Open Sans', sans-serif;
+        font-optical-sizing: auto;
+    }
+}
+
+@theme {
+    --color-web-50: #e9e9e9;
+    --color-web-100: #d2d2d2;
+    --color-web-200: #a5a5a5;
+    --color-web-300: #787878;
+    --color-web-400: #4b4b4b;
+    --color-web-500: #1e1e1e;
+    --color-web-600: #181818;
+    --color-web-700: #121212;
+    --color-web-800: #0c0c0c;
+    --color-web-900: #060606;
+}
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));

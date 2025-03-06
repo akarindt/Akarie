@@ -10,7 +10,9 @@
         "paths": {
             "@/*": ["./*"],
             "@interface/*": ["./src/interface/*"],
-            "@helper/*": ["./src/helper/*"]
+            "@helper/*": ["./src/helper/*"],
+            "@component/*": ["./src/component/*"],
+            "@context/*": ["./src/context/*"]
         },
 
         /* Bundler mode */
