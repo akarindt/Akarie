@@ -6,32 +6,36 @@ export default class ApiFetch {
     private _options: RequestInit | undefined;
     private _method: 'GET' | 'POST' | 'PUT' | 'DELETE';
 
-    constructor(api: string) {
-        this._api = api;
+    constructor() {
+        this._api = '';
         this._method = 'GET';
     }
 
-    set(options: RequestInit): this {
+    set(options: RequestInit | undefined = undefined): this {
         this._options = options;
         return this;
     }
 
-    get(): this {
+    get(endPoint: string): this {
+        this._api = endPoint;
         this._method = 'GET';
         return this;
     }
 
-    post(): this {
+    post(endPoint: string): this {
+        this._api = endPoint;
         this._method = 'POST';
         return this;
     }
 
-    put(): this {
+    put(endPoint: string): this {
+        this._api = endPoint;
         this._method = 'PUT';
         return this;
     }
 
-    delete(): this {
+    delete(endPoint: string): this {
+        this._api = endPoint;
         this._method = 'DELETE';
         return this;
     }
@@ -44,7 +48,6 @@ export default class ApiFetch {
             const response = await fetch(`${Constants.BASE_API}/${this._api}`, {
                 ...this._options,
                 method: this._method,
-                signal: AbortSignal.timeout(Constants.TIMEOUT_DURATION),
                 body: body,
             });
             const data = await (response[type as keyof Response] as () => Promise<T>)();

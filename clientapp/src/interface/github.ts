@@ -13,4 +13,5 @@ export interface GithubRepos {
     watchers_count: number;
     forks_count: number;
     created_at: string;
+    language: string;
 }

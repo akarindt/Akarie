@@ -17,5 +17,6 @@ namespace server.Models
 		public int watchers_count { get; set; }
 		public int forks_count { get; set; }
 		public string created_at { get; set; } = string.Empty;
+		public string language { get; set; } = string.Empty;
 	}
 }

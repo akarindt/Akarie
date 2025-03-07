@@ -9,7 +9,7 @@ const Divider = (
     return (
         <>
             {direction == 'horizontal' ? (
-                <hr {...rest} className={clsx('my-12 h-0.5 border-t-0', className)} />
+                <hr {...rest} className={clsx('my-10 h-0.5 border-t-0', className)} />
             ) : (
                 <div className="flex">
                     <div
