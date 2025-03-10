@@ -5,6 +5,10 @@ import ClockWidget from './ClockWidget';
 import { SlArrowDown } from 'react-icons/sl';
 
 const AboutUI = () => {
+    const handleScroll = () => {
+        document.querySelector('#project-ui')?.scrollIntoView({ behavior: 'smooth' });
+    };
+
     return (
         <section
             id="about-ui"
@@ -44,7 +48,10 @@ const AboutUI = () => {
                     </p>
                 </div>
             </div>
-            <div className="absolute bottom-10 w-[500px] flex flex-col justify-self-end items-center gap-3 max-w-[500px]">
+            <div
+                onClick={handleScroll}
+                className="absolute bottom-10 w-[500px] flex flex-col justify-self-end items-center gap-3 max-w-[500px] cursor-pointer"
+            >
                 <span className="text-sm">Scroll down</span>
                 <SlArrowDown className="text-sm animate-bounce" />
             </div>

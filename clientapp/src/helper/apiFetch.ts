@@ -3,7 +3,7 @@ import Constants from './constants';
 
 export default class ApiFetch {
     private _api: string;
-    private _options: RequestInit | undefined;
+    private _options: Omit<RequestInit, 'body'> | undefined;
     private _method: 'GET' | 'POST' | 'PUT' | 'DELETE';
 
     constructor() {
@@ -11,7 +11,7 @@ export default class ApiFetch {
         this._method = 'GET';
     }
 
-    set(options: RequestInit | undefined = undefined): this {
+    set(options: Omit<RequestInit, 'body'> | undefined = undefined): this {
         this._options = options;
         return this;
     }

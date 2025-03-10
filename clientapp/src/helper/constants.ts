@@ -7,6 +7,7 @@ export default class Constants {
     public static readonly GITHUB_PROFILE = 'https://github.com/akarindt';
     public static readonly LINKEDIN_PROFILE = 'https://www.linkedin.com/in/thangnd3103/';
     public static readonly MAIL_ADDRESS = 'thang.nd3103@proton.me';
+    public static readonly CDN_DISCORD = 'https://cdn.discordapp.com/avatars';
     public static readonly SKILLS: Skill[] = [
         {
             name: 'Languages',
@@ -119,4 +120,5 @@ export default class Constants {
             ],
         },
     ];
+    public static readonly SKILL_ICON_URL = 'https://skillicons.dev/icons';
 }

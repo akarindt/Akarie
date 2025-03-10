@@ -1,8 +1,7 @@
 import clsx from 'clsx';
 import { LiaLinkedinIn } from 'react-icons/lia';
-import { LuGithub } from 'react-icons/lu';
+import { LuGithub, LuMail } from 'react-icons/lu';
 import { RxDiscordLogo } from 'react-icons/rx';
-import { CiMail } from 'react-icons/ci';
 import Constants from '@helper/constants';
 import Divider from '@component/Divider';
 
@@ -90,7 +89,7 @@ const ProfileWidget = () => {
                         'duration-300'
                     )}
                 >
-                    <CiMail />
+                    <LuMail />
                 </a>
             </div>
         </div>

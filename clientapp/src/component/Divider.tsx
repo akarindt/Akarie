@@ -14,10 +14,7 @@ const Divider = (
                 <div className="flex">
                     <div
                         {...rest}
-                        className={clsx(
-                            'inline-block h-max min-h-[1em] w-0.5 self-stretch',
-                            className
-                        )}
+                        className={clsx('inline-block min-h-[1em] w-0.5 self-stretch', className)}
                     ></div>
                 </div>
             )}

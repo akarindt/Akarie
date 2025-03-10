@@ -28,6 +28,8 @@
     --color-web-700: #121212;
     --color-web-800: #0c0c0c;
     --color-web-900: #060606;
+
+    --color-button-100: #97205d;
 }
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));

@@ -4,7 +4,8 @@ import SkillContainer from './SkillIContainer';
 
 const SkillUI = () => {
     return (
-        <div
+        <section
+            id="skill-ui"
             className={clsx(
                 'min-h-[100vh]',
                 'w-[100%]',
@@ -26,7 +27,7 @@ const SkillUI = () => {
                     ))}
                 </div>
             </div>
-        </div>
+        </section>
     );
 };
 
