@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import ApiFetch from '@helper/apiFetch';
 import { useEffect, useState } from 'react';
-import { GithubRepos } from '@/src/interface/github';
+import { GithubRepos } from '@interface/github';
 import ProjectItem from './ProjectItem';
 
 const ProjectUI = () => {

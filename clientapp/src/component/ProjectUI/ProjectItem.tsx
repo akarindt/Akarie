@@ -1,4 +1,4 @@
-import { GithubRepos } from '@/src/interface/github';
+import { GithubRepos } from '@interface/github';
 import clsx from 'clsx';
 import { HTMLAttributes } from 'react';
 import { CgGitFork } from 'react-icons/cg';
