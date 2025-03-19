@@ -6,13 +6,13 @@
         "lib": ["ES2020", "DOM", "DOM.Iterable"],
         "module": "ESNext",
         "skipLibCheck": true,
-        "baseUrl": "../clientapp",
+        "baseUrl": "src",
         "paths": {
             "@/*": ["./*"],
-            "@interface/*": ["./src/interface/*"],
-            "@helper/*": ["./src/helper/*"],
-            "@component/*": ["./src/component/*"],
-            "@context/*": ["./src/context/*"]
+            "@interface/*": ["./interface/*"],
+            "@helper/*": ["./helper/*"],
+            "@component/*": ["./component/*"],
+            "@context/*": ["./context/*"]
         },
 
         /* Bundler mode */

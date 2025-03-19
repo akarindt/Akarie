@@ -26,10 +26,25 @@ services:
     networks:
       - backend
 
+  clientapp:
+    build: ./clientapp/
+    restart: always
+    depends_on:
+      - server
+    ports:
+      - "4173:4173"
+    volumes:
+      - ./clientapp:/app
+      - /app/node_modules
+    networks:
+      - clientapp
+
 volumes:
   redis:
     driver: local
 
 networks:
   backend:
+    driver: bridge
+  clientapp:
     driver: bridge
