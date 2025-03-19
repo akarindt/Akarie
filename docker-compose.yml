@@ -33,9 +33,6 @@ services:
       - server
     ports:
       - "4173:4173"
-    volumes:
-      - ./clientapp:/app
-      - /app/node_modules
     networks:
       - clientapp
 
