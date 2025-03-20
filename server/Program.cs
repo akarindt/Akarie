@@ -96,7 +96,7 @@ app.UseRateLimiter();
 app.UseHttpsRedirection();
 app.UseCors("_default");
 
-app.MapGroup("/api/github").WithTags("Github").MapGithubEndpoint(app.Services.GetRequiredService<IDistributedCache>());
-app.MapGroup("/api/discord").WithTags("Discord").MapDiscordEndpoint(app.Services.GetRequiredService<IDistributedCache>());
+app.MapGroup("/github").WithTags("Github").MapGithubEndpoint(app.Services.GetRequiredService<IDistributedCache>());
+app.MapGroup("/discord").WithTags("Discord").MapDiscordEndpoint(app.Services.GetRequiredService<IDistributedCache>());
 
 app.Run();
