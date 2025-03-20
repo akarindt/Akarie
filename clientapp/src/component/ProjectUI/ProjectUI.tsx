@@ -53,7 +53,9 @@ const ProjectUI = () => {
                 <h1 className="text-4xl text-center font-bold">Projects</h1>
                 <div className="grid grid-cols-1 xl:grid-cols-3 lg:grid-cols-2 gap-5">
                     {reposInfo &&
-                        reposInfo.map((repos, idx) => <ProjectItem key={idx} dataItem={repos} />)}
+                        reposInfo.map((repos, idx) => (
+                            <ProjectItem aria-label={`project-${idx}`} key={idx} dataItem={repos} />
+                        ))}
                 </div>
             </div>
         </section>

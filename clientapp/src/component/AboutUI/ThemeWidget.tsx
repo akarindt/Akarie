@@ -28,6 +28,7 @@ const ThemeWidget = () => {
             )}
         >
             <button
+                aria-label="change-theme"
                 onClick={handleTheme}
                 className={clsx(
                     'text-xl',

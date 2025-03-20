@@ -39,6 +39,7 @@ const AboutUI = () => {
                 <div className="mt-6 max-w-[500px] flex flex-col justify-center items-center gap-3">
                     <h1 className="text-4xl text-center font-bold">Welcome to my website.</h1>
                     <img
+                        alt="akari-avatar"
                         className="h-[75px] w-[75px] rounded-full text-justify"
                         src="https://avatars.githubusercontent.com/u/78296824"
                     />

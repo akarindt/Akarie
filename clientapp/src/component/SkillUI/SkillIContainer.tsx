@@ -15,7 +15,7 @@ const SkillContainer = (props: { dataItem: Skill } & HTMLAttributes<HTMLDivEleme
             </div>
             <div className="grid grid-cols-2 xl:grid-cols-4 lg:grid-cols-3 gap-5">
                 {dataItem.items.map((item, idx) => (
-                    <SkillItem key={idx} dataItem={item} />
+                    <SkillItem aria-label={`skill-${idx}`} key={idx} dataItem={item} />
                 ))}
             </div>
         </div>

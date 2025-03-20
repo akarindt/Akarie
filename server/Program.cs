@@ -75,7 +75,15 @@ builder.Services.AddCors(options =>
 		name: "_default",
 		builder =>
 		{
-			builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+			builder
+				.WithOrigins(
+					[
+						Environment.GetEnvironmentVariable("ALLOWED_HTTP_DOMAIN")!,
+						Environment.GetEnvironmentVariable("ALLOWED_HTTPS_DOMAIN")!,
+					]
+				)
+				.AllowAnyHeader()
+				.AllowAnyMethod();
 		}
 	);
 });

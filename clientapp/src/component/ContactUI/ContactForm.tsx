@@ -131,6 +131,7 @@ const ContactForm = () => {
                         />
                     </div>
                     <button
+                        aria-label="send"
                         className={clsx(
                             'flex',
                             'flex-row',

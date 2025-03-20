@@ -43,6 +43,7 @@ const AddressInfo = () => {
                 {discordInfo && (
                     <div className="flex flex-row gap-3 dark:bg-web-450 bg-web-100 px-3 py-4 max-w-[250px] w-[250px] rounded-[5px]">
                         <img
+                            alt="discord-avatar"
                             className="rounded-full w-[50px] h-[50px]"
                             src={`${Constants.CDN_DISCORD}/${discordInfo.id}/${discordInfo.avatar}`}
                         />
@@ -60,6 +61,7 @@ const AddressInfo = () => {
             <div className="flex flex-col justify-center">
                 <div>
                     <a
+                        aria-label="address-github-profile"
                         href={Constants.GITHUB_PROFILE}
                         target="_blank"
                         className={clsx(
@@ -83,6 +85,7 @@ const AddressInfo = () => {
                 </div>
                 <div>
                     <a
+                        aria-label="mail-address-info"
                         href={`mailto:${Constants.MAIL_ADDRESS}`}
                         target="_blank"
                         className={clsx(

@@ -25,6 +25,7 @@ const ProfileWidget = () => {
                 )}
             >
                 <a
+                    aria-label="linkedin-profile"
                     href={Constants.LINKEDIN_PROFILE}
                     target="_blank"
                     className={clsx(
@@ -42,6 +43,7 @@ const ProfileWidget = () => {
                 </a>
                 <Divider className="bg-web-200 dark:bg-web-400" direction="vertical" />
                 <a
+                    aria-label="github-profile"
                     href={Constants.GITHUB_PROFILE}
                     target="_blank"
                     className={clsx(
@@ -59,6 +61,7 @@ const ProfileWidget = () => {
                 </a>
                 <Divider className="bg-web-200 dark:bg-web-400" direction="vertical" />
                 <a
+                    aria-label="discord-profile"
                     href={Constants.DISCORD_PROFILE}
                     target="_blank"
                     className={clsx(
@@ -76,6 +79,7 @@ const ProfileWidget = () => {
                 </a>
                 <Divider className="bg-web-200 dark:bg-web-400" direction="vertical" />
                 <a
+                    aria-label="mail-address"
                     href={`mailto:${Constants.MAIL_ADDRESS}`}
                     target="_blank"
                     className={clsx(

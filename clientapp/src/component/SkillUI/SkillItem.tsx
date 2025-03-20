@@ -38,7 +38,10 @@ const SkillItem = (
             href={dataItem.url}
             {...rest}
         >
-            <img src={`${Constants.SKILL_ICON_URL}?i=${dataItem.className}`} />
+            <img
+                alt={dataItem.className}
+                src={`${Constants.SKILL_ICON_URL}?i=${dataItem.className}`}
+            />
             <h1 className="font-bold text-xl">{dataItem.name}</h1>
         </a>
     );

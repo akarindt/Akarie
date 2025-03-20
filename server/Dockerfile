@@ -15,6 +15,8 @@ RUN dotnet publish -c Release -o out
 # Use the official ASP.NET Core runtime as a parent image
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
 WORKDIR /app
+
+COPY --from=build /app/.env ./
 COPY --from=build /app/out ./
 
 # Run the application
